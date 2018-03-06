@@ -4,7 +4,8 @@ const { map } = require('ramda')
 
 const createWord = w => ({
   id: uuid.v4(),
-  name: w
+  name: null,
+  value: w
 })
 
 const buzzez = map(createWord, buzz)
