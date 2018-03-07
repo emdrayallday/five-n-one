@@ -1,31 +1,20 @@
 import React from 'react'
-import fetch from 'isomorphic-fetch'
 import { map } from 'ramda'
-
+import { connect } from 'react-redux'
 const li = n => {
   return <li key={n.id}>{n.name}</li>
 }
 
-class Buzz extends React.Component {
-  constructor() {
-    super()
-    this.state = { names: [] }
-  }
-  componentDidMount() {
-    fetch('http://localhost:5000/starwars')
-      .then(res => res.json())
-      .then(names => this.setState({ names }))
-      .catch(err => console.log(err))
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Names of StarWars Characters!</h1>
-        <ul>{map(li, this.state.names)}</ul>
-      </div>
-    )
-  }
+function Star(props) {
+  return (
+    <div>
+      <h1>Names of StarWars Characters!</h1>
+      <ul>{map(li, props.starwars)}</ul>
+    </div>
+  )
 }
-
-export default Buzz
+function mapStateToProps(state) {
+  return { starwars: state.starwars }
+}
+const connector = connect(mapStateToProps)
+export default connector(Star)

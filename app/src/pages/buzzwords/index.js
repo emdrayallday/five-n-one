@@ -1,31 +1,22 @@
 import React from 'react'
-import fetch from 'isomorphic-fetch'
-import { map } from 'ramda'
 
+import { map } from 'ramda'
+import { connect } from 'react-redux'
 const li = word => {
   return <li key={word.id}>{word.value}</li>
 }
 
-class Buzz extends React.Component {
-  constructor() {
-    super()
-    this.state = { colors: [] }
-  }
-  componentDidMount() {
-    fetch('http://localhost:5000/buzzwords')
-      .then(res => res.json())
-      .then(colors => this.setState({ colors }))
-      .catch(err => console.log(err))
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Buzz Words!</h1>
-        <ul>{map(li, this.state.colors)}</ul>
-      </div>
-    )
-  }
+function Buzz(props) {
+  console.log(props)
+  return (
+    <div>
+      <h1>Buzz Words!</h1>
+      <ul>{map(li, props.buzzwords)}</ul>
+    </div>
+  )
 }
-
-export default Buzz
+function mapStateToProps(state) {
+  return { buzzwords: state.buzzwords }
+}
+const connector = connect(mapStateToProps)
+export default connector(Buzz)

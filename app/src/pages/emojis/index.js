@@ -1,31 +1,20 @@
 import React from 'react'
-import fetch from 'isomorphic-fetch'
 import { map } from 'ramda'
-
+import { connect } from 'react-redux'
 const li = f => {
   return <li key={f.id}>{f.value}</li>
 }
 
-class Emoji extends React.Component {
-  constructor() {
-    super()
-    this.state = { names: [] }
-  }
-  componentDidMount() {
-    fetch('http://localhost:5000/emojis')
-      .then(res => res.json())
-      .then(names => this.setState({ names }))
-      .catch(err => console.log(err))
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>EMOJIS!</h1>
-        <ul>{map(li, this.state.names)}</ul>
-      </div>
-    )
-  }
+function Emoji(props) {
+  return (
+    <div>
+      <h1>EMOJIS!</h1>
+      <ul>{map(li, props.emojis)}</ul>
+    </div>
+  )
 }
-
-export default Emoji
+function mapStateToProps(state) {
+  return { emojis: state.emojis }
+}
+const connector = connect(mapStateToProps)
+export default connector(Emoji)
