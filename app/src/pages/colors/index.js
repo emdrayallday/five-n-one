@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import { map } from 'ramda'
 import { connect } from 'react-redux'
 
@@ -15,6 +15,7 @@ const Colors = props => {
   return (
     <div>
       <h1>Check out these colors!</h1>
+      <Link to="/colors/new">Add New Color</Link>
       <ul>{map(li, props.colors)}</ul>
     </div>
   )
