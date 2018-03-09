@@ -16,7 +16,6 @@ export const addColor = (color, history) => async (dispatch, getState) => {
   const result = await fetch(url, { headers, method, body })
     .then(res => res.json())
     .catch(err => console.log(err))
-  console.log('RESULT', result)
   if (result.ok) {
     dispatch(setColors)
     history.push('/colors')
